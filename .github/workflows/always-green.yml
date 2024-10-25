@@ -13,12 +13,13 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Run a one-line script
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}  # Use the secret you created
         run: |
           echo " " >> README.md  # Add a space to README to trigger commit
           git config user.name "collegeid"  # Replace with your username
           git config user.email "vjhunter23@gmail.com"  # Replace with your email
           git add .
           git commit -m "Always green!"
-          git push https://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:x-oauth-basic@github.com/collegeid/collegeid.git
-        env:
-          TOKEN: ${{ secrets.PAT_TOKEN }}  # Use the secret you created
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/collegeid/collegeid.git
+          git push origin main  # Push to the main branch (or the relevant branch)
